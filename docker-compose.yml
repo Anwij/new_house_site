@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  django:
+    command:
+      - sh
+      - -c
+      - |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        python manage.py runserver 0.0.0.0:52222
+    image: python:3.12.3-alpine
+    ports:
+      - 52222:52222
+    volumes:
+      - ./:/app
+    working_dir: /app

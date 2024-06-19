@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Все заявки</h2>
+    {% for application in application_list %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'application:application_detail' pk=application.pk %}">{{application.email}}</a>
+          </h5>
+          {% comment %} <p class="card-text">{{ application.content }}</p> {% endcomment %}
+          <p class="card-text"><small class="text-muted">Опубликовано {{application.created_at}}</small></p>
+          <!-- добавить новость для суперпользователя -->
+          {% if request.user.role == "ADMIN"   and  request.user.is_authenticated%}
+            <form method="post" action="{% url 'application:delete_application' pk=application.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

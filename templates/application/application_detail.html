@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>{{ application.email }}</h2>
+    <div class="card mt-3">
+      <div class="card-body">
+        <p class="card-text">{{ application.content }}</p>
+        <p class="card-text"><small class="text-muted">Опубликовано {{application.created_at}}</small></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

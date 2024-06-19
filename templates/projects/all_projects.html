@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Все проекты</h2>
+    {% for projects in projects_list %}
+      <div class="card mt-3 maincardttt">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'projects:projects_detail' pk=projects.pk %}">{{ projects.title }}</a>
+          </h5>
+          {% comment %} <p class="card-text">{{ projects.content }}</p> {% endcomment %}
+          <p class="card-text"><small class="text-muted">Опубликовано {{projects.created_at }}</small></p>
+          <!-- добавить новость для суперпользователя -->
+          {% if request.user.role == "ADMIN"   and  request.user.is_authenticated%}
+            <form method="post" action="{% url 'projects:delete_projects' pk=projects.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

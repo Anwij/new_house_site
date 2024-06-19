@@ -1,0 +1,35 @@
+
+{% extends 'app/base.html' %}
+
+{% block title %}Список продуктов{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h2>Список выполняемых услуг</h2>
+
+        {% for product in products %}
+            <div class="card mt-3 maincardttt">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{% url 'app:product_detail' pk=product.pk %}">{{ product.name }}</a>
+                  </h5>
+                  {% comment %} <p class="card-text">{{ product.description }}</p> {% endcomment %}
+                  {% if request.user.role == "ADMIN"   and  request.user.is_authenticated%}
+                    <form method="post" action="{% url 'cart:delete_product' product.pk %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                  {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+
+
+
